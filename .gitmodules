@@ -1,0 +1,6 @@
+[submodule "JetsonGPIO"]
+	path = JetsonGPIO
+	url = https://github.com/pjueon/JetsonGPIO.git
+[submodule "ros_sensor_driver/include/console_bridge"]
+	path = ros_sensor_driver/include/console_bridge
+	url = https://github.com/ros/console_bridge.git
