@@ -11,7 +11,7 @@ Process::~Process() {}
 
 void Process::sleep()
 {
-    //pause();
+    pause();
     std::unique_lock<std::mutex> lock(m_mutex);
     m_cv.wait(lock, [this]{return !m_isPause;});
 }
@@ -45,10 +45,5 @@ void Process::stop()
     m_isStop = true;
     m_isPause = false;
 }
-
-/*
-int Process::get_power()
-{
-    return power;
-}
-*/
+// close_process() Could be the same as stop() ^^
+void Process::close_process() {}

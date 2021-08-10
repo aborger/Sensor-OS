@@ -13,9 +13,9 @@ Scheduler::~Scheduler()
 
 }
 
+/*
 void Scheduler::run()
 {
-
     Process *running_proc = run_queue.front();
     run_queue.pop();
     running_proc->pause();
@@ -24,6 +24,20 @@ void Scheduler::run()
     sleep_queue.pop();
     sleeping_proc->resume();
     run_queue.push(sleeping_proc);
+}
+*/
+
+void Scheduler::run()
+{
+    Process *running_proc = run_queue.front();
+    run_queue.pop();
+    running_proc->pause();
+    sleep_queue.push(running_proc);
+
+    Process* next_proc = sleep_queue.front();
+    sleep_queue.pop();
+    next_proc->resume();
+    run_queue.push(next_proc);
 }
 
 // Also reorganizes queue
@@ -41,7 +55,18 @@ void Scheduler::add_process(Process* new_proc)
     sleep_queue.push(new_proc);
 }
 
-
+void Scheduler::cleanup()
+{
+    while (!run_queue.empty()) {
+        run_queue.front()->pause();
+        run_queue.front()->close_process();
+        run_queue.pop();
+    }
+    while (!sleep_queue.empty()) {
+        sleep_queue.front()->close_process();
+        sleep_queue.pop();
+    }
+}
 
 
 /*

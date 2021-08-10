@@ -15,10 +15,12 @@ Driver::Driver()
 
 
     up_proc = new Programs::CountUp(&power);
-    down_proc = new Programs::CountDown(&power);
+    //down_proc = new Programs::CountDown(&power);
+    sense_proc = new Programs::GetSensor();
 
     sched.add_process(up_proc);
-    sched.add_process(down_proc);
+    sched.add_process(sense_proc);
+    //sched.add_process(down_proc);
     sched.select_next_process();
 
 
@@ -32,6 +34,7 @@ void Driver::run()
     {
         motor->start(power);
         ros::spinOnce();
+        sched.run();
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
         ROS_INFO("%i", power);
     }
@@ -56,6 +59,7 @@ int main(int argc, char **argv)
 
     driver->run();
 
+    driver->sched.cleanup();
     GPIO::cleanup();
     return 0;
 }

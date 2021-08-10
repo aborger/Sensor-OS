@@ -15,6 +15,7 @@ namespace Sense
             void run();
             void add_process(Process* new_proc);
             Process* select_next_process();
+            void cleanup();
         private:
             //Process current;
             std::queue<Process*> run_queue;

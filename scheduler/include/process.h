@@ -25,6 +25,7 @@ namespace Sense
 
             //template <typename func_type>
             void set_thread(void (*func)());
+            void close_process();
         private:
             bool m_isStop;
             bool m_isPause;

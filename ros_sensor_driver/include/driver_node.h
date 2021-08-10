@@ -4,6 +4,7 @@
 #include "scheduler.h"
 #include "process.h"
 #include "programs.h"
+#include "I2C_program.h"
 
 class Driver
 {
@@ -16,6 +17,7 @@ class Driver
 
         Programs::CountUp* up_proc;
         Programs::CountDown* down_proc;
+        Programs::GetSensor* sense_proc;
 
         int power;
         Sense::Scheduler sched;
