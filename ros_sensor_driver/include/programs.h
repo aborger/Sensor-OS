@@ -8,6 +8,7 @@ namespace Programs {
             int* power;
             CountUp(int* i);
             void run_func();
+            bool countDirection;
     };
     class CountDown: public Sense::Process
     {

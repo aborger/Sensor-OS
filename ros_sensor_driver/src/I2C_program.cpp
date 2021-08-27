@@ -1,7 +1,7 @@
 #include "I2C_program.h"
 
 
-Programs::GetSensor::GetSensor() {
+Programs::GetSensor::GetSensor(int* _power) {
     if ((bus = i2c_open("/dev/i2c-1")) == -1) {
         std::cout << "Error!" << std::endl;
         exit(-4);        
@@ -14,6 +14,7 @@ Programs::GetSensor::GetSensor() {
     device.addr = 0x8;
     device.iaddr_bytes = 0;
     device.page_bytes = 16;
+    power = _power;
 }
 
 int Programs::GetSensor::read_int() {
@@ -49,7 +50,11 @@ void Programs::GetSensor::run_func() {
     while (true) {
         write_bool(1);
         int ans = read_int();
-        std::cout << "Answer: " << ans << std::endl;
+        if (ans == 1)
+        {
+            *power = 0;
+        }
+        std::cout << "Button State: " << ans << std::endl;
         write_bool(0);
         sleep();
     }
